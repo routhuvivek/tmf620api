@@ -9,10 +9,8 @@ import io.swagger.model.Money;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.CascadeType;
+import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -27,8 +25,9 @@ import javax.validation.constraints.*;
 @Data
 public class TaxItem   {
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @JsonProperty("id")
-  private String id = null;
+  private Long id = null;
 
   @JsonProperty("href")
   private String href = null;
@@ -52,7 +51,7 @@ public class TaxItem   {
   @JsonProperty("@type")
   private String type = null;
 
-  public TaxItem id(String id) {
+  public TaxItem id(Long id) {
     this.id = id;
     return this;
   }
@@ -64,11 +63,11 @@ public class TaxItem   {
   @ApiModelProperty(value = "unique identifier")
 
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

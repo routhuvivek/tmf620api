@@ -90,7 +90,7 @@ public class ProductOfferingPrice   {
 
   @JsonProperty("place")
   @Valid
-  @OneToMany(targetEntity = PlaceRef.class, cascade = CascadeType.ALL)
+  @OneToMany(targetEntity = PlaceRef.class, cascade = CascadeType.MERGE)
   private List<PlaceRef> place = null;
 
   @JsonProperty("popRelationship")
