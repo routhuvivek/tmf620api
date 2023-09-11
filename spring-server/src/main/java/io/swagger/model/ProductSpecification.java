@@ -16,8 +16,14 @@ import io.swagger.model.TargetProductSchema;
 import io.swagger.model.TimePeriod;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 import org.threeten.bp.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -28,8 +34,12 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2023-08-21T06:57:56.020Z")
 
-
+@Entity
+@Data
 public class ProductSpecification   {
+  @Id
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
   @JsonProperty("id")
   private String id = null;
 
@@ -40,6 +50,7 @@ public class ProductSpecification   {
   private String brand = null;
 
   @JsonProperty("description")
+  @Lob
   private String description = null;
 
   @JsonProperty("isBundle")
@@ -62,36 +73,45 @@ public class ProductSpecification   {
 
   @JsonProperty("attachment")
   @Valid
+  @OneToMany(targetEntity = AttachmentRefOrValue.class, cascade = CascadeType.ALL)
   private List<AttachmentRefOrValue> attachment = null;
 
   @JsonProperty("bundledProductSpecification")
   @Valid
+  @OneToMany(targetEntity = BundledProductSpecification.class, cascade = CascadeType.ALL)
   private List<BundledProductSpecification> bundledProductSpecification = null;
 
-  @JsonProperty("productSpecCharacteristic")
+  @JsonProperty("productSpecChar")
   @Valid
-  private List<ProductSpecificationCharacteristic> productSpecCharacteristic = null;
+  @OneToMany(targetEntity = ProductSpecificationCharacteristic.class, cascade = CascadeType.ALL)
+  private List<ProductSpecificationCharacteristic> productSpecChar = null;
 
-  @JsonProperty("productSpecificationRelationship")
+  @JsonProperty("productSpecRel")
   @Valid
-  private List<ProductSpecificationRelationship> productSpecificationRelationship = null;
+  @OneToMany(targetEntity = ProductSpecificationRelationship.class, cascade = CascadeType.ALL)
+  private List<ProductSpecificationRelationship> productSpecRel = null;
 
   @JsonProperty("relatedParty")
   @Valid
+  @OneToMany(targetEntity = RelatedParty.class, cascade = CascadeType.ALL)
   private List<RelatedParty> relatedParty = null;
 
   @JsonProperty("resourceSpecification")
   @Valid
+  @OneToMany(targetEntity = ResourceSpecificationRef.class, cascade = CascadeType.ALL)
   private List<ResourceSpecificationRef> resourceSpecification = null;
 
   @JsonProperty("serviceSpecification")
   @Valid
+  @OneToMany(targetEntity = ServiceSpecificationRef.class, cascade = CascadeType.ALL)
   private List<ServiceSpecificationRef> serviceSpecification = null;
 
   @JsonProperty("targetProductSchema")
+  @OneToOne(targetEntity = TargetProductSchema.class, cascade = CascadeType.ALL)
   private TargetProductSchema targetProductSchema = null;
 
   @JsonProperty("validFor")
+  @OneToOne(targetEntity = TimePeriod.class, cascade = CascadeType.ALL)
   private TimePeriod validFor = null;
 
   @JsonProperty("@baseType")
@@ -362,62 +382,62 @@ public class ProductSpecification   {
     this.bundledProductSpecification = bundledProductSpecification;
   }
 
-  public ProductSpecification productSpecCharacteristic(List<ProductSpecificationCharacteristic> productSpecCharacteristic) {
-    this.productSpecCharacteristic = productSpecCharacteristic;
+  public ProductSpecification productSpecChar(List<ProductSpecificationCharacteristic> productSpecChar) {
+    this.productSpecChar = productSpecChar;
     return this;
   }
 
-  public ProductSpecification addProductSpecCharacteristicItem(ProductSpecificationCharacteristic productSpecCharacteristicItem) {
-    if (this.productSpecCharacteristic == null) {
-      this.productSpecCharacteristic = new ArrayList<ProductSpecificationCharacteristic>();
+  public ProductSpecification addproductSpecCharItem(ProductSpecificationCharacteristic productSpecCharItem) {
+    if (this.productSpecChar == null) {
+      this.productSpecChar = new ArrayList<ProductSpecificationCharacteristic>();
     }
-    this.productSpecCharacteristic.add(productSpecCharacteristicItem);
+    this.productSpecChar.add(productSpecCharItem);
     return this;
   }
 
   /**
    * A characteristic quality or distinctive feature of a ProductSpecification.  The characteristic can be take on a discrete value, such as color, can take on a range of values, (for example, sensitivity of 100-240 mV), or can be derived from a formula (for example, usage time (hrs) = 30 - talk time *3). Certain characteristics, such as color, may be configured during the ordering or some other process.
-   * @return productSpecCharacteristic
+   * @return productSpecChar
   **/
   @ApiModelProperty(value = "A characteristic quality or distinctive feature of a ProductSpecification.  The characteristic can be take on a discrete value, such as color, can take on a range of values, (for example, sensitivity of 100-240 mV), or can be derived from a formula (for example, usage time (hrs) = 30 - talk time *3). Certain characteristics, such as color, may be configured during the ordering or some other process.")
 
   @Valid
 
-  public List<ProductSpecificationCharacteristic> getProductSpecCharacteristic() {
-    return productSpecCharacteristic;
+  public List<ProductSpecificationCharacteristic> getproductSpecChar() {
+    return productSpecChar;
   }
 
-  public void setProductSpecCharacteristic(List<ProductSpecificationCharacteristic> productSpecCharacteristic) {
-    this.productSpecCharacteristic = productSpecCharacteristic;
+  public void setproductSpecChar(List<ProductSpecificationCharacteristic> productSpecChar) {
+    this.productSpecChar = productSpecChar;
   }
 
-  public ProductSpecification productSpecificationRelationship(List<ProductSpecificationRelationship> productSpecificationRelationship) {
-    this.productSpecificationRelationship = productSpecificationRelationship;
+  public ProductSpecification productSpecRel(List<ProductSpecificationRelationship> productSpecRel) {
+    this.productSpecRel = productSpecRel;
     return this;
   }
 
-  public ProductSpecification addProductSpecificationRelationshipItem(ProductSpecificationRelationship productSpecificationRelationshipItem) {
-    if (this.productSpecificationRelationship == null) {
-      this.productSpecificationRelationship = new ArrayList<ProductSpecificationRelationship>();
+  public ProductSpecification addProductSpecificationRelationshipItem(ProductSpecificationRelationship productSpecRelItem) {
+    if (this.productSpecRel == null) {
+      this.productSpecRel = new ArrayList<ProductSpecificationRelationship>();
     }
-    this.productSpecificationRelationship.add(productSpecificationRelationshipItem);
+    this.productSpecRel.add(productSpecRelItem);
     return this;
   }
 
   /**
    * A migration, substitution, dependency or exclusivity relationship between/among product specifications.
-   * @return productSpecificationRelationship
+   * @return productSpecRel
   **/
   @ApiModelProperty(value = "A migration, substitution, dependency or exclusivity relationship between/among product specifications.")
 
   @Valid
 
   public List<ProductSpecificationRelationship> getProductSpecificationRelationship() {
-    return productSpecificationRelationship;
+    return productSpecRel;
   }
 
-  public void setProductSpecificationRelationship(List<ProductSpecificationRelationship> productSpecificationRelationship) {
-    this.productSpecificationRelationship = productSpecificationRelationship;
+  public void setProductSpecificationRelationship(List<ProductSpecificationRelationship> productSpecRel) {
+    this.productSpecRel = productSpecRel;
   }
 
   public ProductSpecification relatedParty(List<RelatedParty> relatedParty) {
@@ -631,8 +651,8 @@ public class ProductSpecification   {
         Objects.equals(this.version, productSpecification.version) &&
         Objects.equals(this.attachment, productSpecification.attachment) &&
         Objects.equals(this.bundledProductSpecification, productSpecification.bundledProductSpecification) &&
-        Objects.equals(this.productSpecCharacteristic, productSpecification.productSpecCharacteristic) &&
-        Objects.equals(this.productSpecificationRelationship, productSpecification.productSpecificationRelationship) &&
+        Objects.equals(this.productSpecChar, productSpecification.productSpecChar) &&
+        Objects.equals(this.productSpecRel, productSpecification.productSpecRel) &&
         Objects.equals(this.relatedParty, productSpecification.relatedParty) &&
         Objects.equals(this.resourceSpecification, productSpecification.resourceSpecification) &&
         Objects.equals(this.serviceSpecification, productSpecification.serviceSpecification) &&
@@ -645,7 +665,7 @@ public class ProductSpecification   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, href, brand, description, isBundle, lastUpdate, lifecycleStatus, name, productNumber, version, attachment, bundledProductSpecification, productSpecCharacteristic, productSpecificationRelationship, relatedParty, resourceSpecification, serviceSpecification, targetProductSchema, validFor, baseType, schemaLocation, type);
+    return Objects.hash(id, href, brand, description, isBundle, lastUpdate, lifecycleStatus, name, productNumber, version, attachment, bundledProductSpecification, productSpecChar, productSpecRel, relatedParty, resourceSpecification, serviceSpecification, targetProductSchema, validFor, baseType, schemaLocation, type);
   }
 
   @Override
@@ -665,8 +685,8 @@ public class ProductSpecification   {
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("    attachment: ").append(toIndentedString(attachment)).append("\n");
     sb.append("    bundledProductSpecification: ").append(toIndentedString(bundledProductSpecification)).append("\n");
-    sb.append("    productSpecCharacteristic: ").append(toIndentedString(productSpecCharacteristic)).append("\n");
-    sb.append("    productSpecificationRelationship: ").append(toIndentedString(productSpecificationRelationship)).append("\n");
+    sb.append("    productSpecChar: ").append(toIndentedString(productSpecChar)).append("\n");
+    sb.append("    productSpecRel: ").append(toIndentedString(productSpecRel)).append("\n");
     sb.append("    relatedParty: ").append(toIndentedString(relatedParty)).append("\n");
     sb.append("    resourceSpecification: ").append(toIndentedString(resourceSpecification)).append("\n");
     sb.append("    serviceSpecification: ").append(toIndentedString(serviceSpecification)).append("\n");

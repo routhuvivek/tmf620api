@@ -5,7 +5,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -16,8 +20,10 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2023-08-21T06:57:56.020Z")
 
-
+@Entity
+@Data
 public class RelatedParty   {
+  @Id
   @JsonProperty("id")
   private String id = null;
 
@@ -53,8 +59,6 @@ public class RelatedParty   {
   **/
   @ApiModelProperty(required = true, value = "unique identifier")
   @NotNull
-
-
   public String getId() {
     return id;
   }
@@ -173,8 +177,6 @@ public class RelatedParty   {
    * @return type
   **/
   @ApiModelProperty(value = "When sub-classing, this defines the sub-class Extensible name")
-
-
   public String getType() {
     return type;
   }
@@ -193,9 +195,7 @@ public class RelatedParty   {
    * @return referredType
   **/
   @ApiModelProperty(required = true, value = "The actual type of the target instance when needed for disambiguation.")
-  @NotNull
-
-
+  //@NotNull
   public String getReferredType() {
     return referredType;
   }

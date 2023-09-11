@@ -10,7 +10,12 @@ import io.swagger.model.ProductSpecificationCharacteristicRelationship;
 import io.swagger.model.TimePeriod;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.Data;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -21,8 +26,10 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2023-08-21T06:57:56.020Z")
 
-
+@Entity
+@Data
 public class ProductSpecificationCharacteristic   {
+  @Id
   @JsonProperty("id")
   private String id = null;
 
@@ -53,15 +60,18 @@ public class ProductSpecificationCharacteristic   {
   @JsonProperty("valueType")
   private String valueType = null;
 
-  @JsonProperty("productSpecCharRelationship")
+  @JsonProperty("productSpecCharRel")
   @Valid
-  private List<ProductSpecificationCharacteristicRelationship> productSpecCharRelationship = null;
+  @OneToMany(targetEntity = ProductSpecificationCharacteristicRelationship.class,cascade = CascadeType.ALL)
+  private List<ProductSpecificationCharacteristicRelationship> productSpecCharRel = null;
 
-  @JsonProperty("productSpecCharacteristicValue")
+  @JsonProperty("productSpecCharValue")
   @Valid
-  private List<CharacteristicValueSpecification> productSpecCharacteristicValue = null;
+  @OneToMany(targetEntity = CharacteristicValueSpecification.class, cascade = CascadeType.ALL)
+  private List<CharacteristicValueSpecification> productSpecCharValue = null;
 
   @JsonProperty("validFor")
+  @OneToOne(targetEntity = TimePeriod.class, cascade = CascadeType.ALL)
   private TimePeriod validFor = null;
 
   @JsonProperty("@baseType")
@@ -276,62 +286,62 @@ public class ProductSpecificationCharacteristic   {
     this.valueType = valueType;
   }
 
-  public ProductSpecificationCharacteristic productSpecCharRelationship(List<ProductSpecificationCharacteristicRelationship> productSpecCharRelationship) {
-    this.productSpecCharRelationship = productSpecCharRelationship;
+  public ProductSpecificationCharacteristic productSpecCharRel(List<ProductSpecificationCharacteristicRelationship> productSpecCharRel) {
+    this.productSpecCharRel = productSpecCharRel;
     return this;
   }
 
-  public ProductSpecificationCharacteristic addProductSpecCharRelationshipItem(ProductSpecificationCharacteristicRelationship productSpecCharRelationshipItem) {
-    if (this.productSpecCharRelationship == null) {
-      this.productSpecCharRelationship = new ArrayList<ProductSpecificationCharacteristicRelationship>();
+  public ProductSpecificationCharacteristic addProductSpecCharRelationshipItem(ProductSpecificationCharacteristicRelationship productSpecCharRelItem) {
+    if (this.productSpecCharRel == null) {
+      this.productSpecCharRel = new ArrayList<ProductSpecificationCharacteristicRelationship>();
     }
-    this.productSpecCharRelationship.add(productSpecCharRelationshipItem);
+    this.productSpecCharRel.add(productSpecCharRelItem);
     return this;
   }
 
   /**
    * An aggregation, migration, substitution, dependency or exclusivity relationship between/among Specification Characteristics.
-   * @return productSpecCharRelationship
+   * @return productSpecCharRel
   **/
   @ApiModelProperty(value = "An aggregation, migration, substitution, dependency or exclusivity relationship between/among Specification Characteristics.")
 
   @Valid
 
   public List<ProductSpecificationCharacteristicRelationship> getProductSpecCharRelationship() {
-    return productSpecCharRelationship;
+    return productSpecCharRel;
   }
 
-  public void setProductSpecCharRelationship(List<ProductSpecificationCharacteristicRelationship> productSpecCharRelationship) {
-    this.productSpecCharRelationship = productSpecCharRelationship;
+  public void setProductSpecCharRelationship(List<ProductSpecificationCharacteristicRelationship> productSpecCharRel) {
+    this.productSpecCharRel = productSpecCharRel;
   }
 
-  public ProductSpecificationCharacteristic productSpecCharacteristicValue(List<CharacteristicValueSpecification> productSpecCharacteristicValue) {
-    this.productSpecCharacteristicValue = productSpecCharacteristicValue;
+  public ProductSpecificationCharacteristic productSpecCharValue(List<CharacteristicValueSpecification> productSpecCharValue) {
+    this.productSpecCharValue = productSpecCharValue;
     return this;
   }
 
-  public ProductSpecificationCharacteristic addProductSpecCharacteristicValueItem(CharacteristicValueSpecification productSpecCharacteristicValueItem) {
-    if (this.productSpecCharacteristicValue == null) {
-      this.productSpecCharacteristicValue = new ArrayList<CharacteristicValueSpecification>();
+  public ProductSpecificationCharacteristic addproductSpecCharValueItem(CharacteristicValueSpecification productSpecCharValueItem) {
+    if (this.productSpecCharValue == null) {
+      this.productSpecCharValue = new ArrayList<CharacteristicValueSpecification>();
     }
-    this.productSpecCharacteristicValue.add(productSpecCharacteristicValueItem);
+    this.productSpecCharValue.add(productSpecCharValueItem);
     return this;
   }
 
   /**
    * A ProductSpecificationCharacteristicValue object is used to define a set of attributes, each of which can be assigned to a corresponding set of attributes in a ProductSpecificationCharacteristic object. The values of the attributes in the ProductSpecificationCharacteristicValue object describe the values of the attributes that a corresponding ProductSpecificationCharacteristic object can take on.
-   * @return productSpecCharacteristicValue
+   * @return productSpecCharValue
   **/
   @ApiModelProperty(value = "A ProductSpecificationCharacteristicValue object is used to define a set of attributes, each of which can be assigned to a corresponding set of attributes in a ProductSpecificationCharacteristic object. The values of the attributes in the ProductSpecificationCharacteristicValue object describe the values of the attributes that a corresponding ProductSpecificationCharacteristic object can take on.")
 
   @Valid
 
-  public List<CharacteristicValueSpecification> getProductSpecCharacteristicValue() {
-    return productSpecCharacteristicValue;
+  public List<CharacteristicValueSpecification> getproductSpecCharValue() {
+    return productSpecCharValue;
   }
 
-  public void setProductSpecCharacteristicValue(List<CharacteristicValueSpecification> productSpecCharacteristicValue) {
-    this.productSpecCharacteristicValue = productSpecCharacteristicValue;
+  public void setproductSpecCharValue(List<CharacteristicValueSpecification> productSpecCharValue) {
+    this.productSpecCharValue = productSpecCharValue;
   }
 
   public ProductSpecificationCharacteristic validFor(TimePeriod validFor) {
@@ -455,8 +465,8 @@ public class ProductSpecificationCharacteristic   {
         Objects.equals(this.name, productSpecificationCharacteristic.name) &&
         Objects.equals(this.regex, productSpecificationCharacteristic.regex) &&
         Objects.equals(this.valueType, productSpecificationCharacteristic.valueType) &&
-        Objects.equals(this.productSpecCharRelationship, productSpecificationCharacteristic.productSpecCharRelationship) &&
-        Objects.equals(this.productSpecCharacteristicValue, productSpecificationCharacteristic.productSpecCharacteristicValue) &&
+        Objects.equals(this.productSpecCharRel, productSpecificationCharacteristic.productSpecCharRel) &&
+        Objects.equals(this.productSpecCharValue, productSpecificationCharacteristic.productSpecCharValue) &&
         Objects.equals(this.validFor, productSpecificationCharacteristic.validFor) &&
         Objects.equals(this.baseType, productSpecificationCharacteristic.baseType) &&
         Objects.equals(this.schemaLocation, productSpecificationCharacteristic.schemaLocation) &&
@@ -466,7 +476,7 @@ public class ProductSpecificationCharacteristic   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, configurable, description, extensible, isUnique, maxCardinality, minCardinality, name, regex, valueType, productSpecCharRelationship, productSpecCharacteristicValue, validFor, baseType, schemaLocation, type, valueSchemaLocation);
+    return Objects.hash(id, configurable, description, extensible, isUnique, maxCardinality, minCardinality, name, regex, valueType, productSpecCharRel, productSpecCharValue, validFor, baseType, schemaLocation, type, valueSchemaLocation);
   }
 
   @Override
@@ -484,8 +494,8 @@ public class ProductSpecificationCharacteristic   {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    regex: ").append(toIndentedString(regex)).append("\n");
     sb.append("    valueType: ").append(toIndentedString(valueType)).append("\n");
-    sb.append("    productSpecCharRelationship: ").append(toIndentedString(productSpecCharRelationship)).append("\n");
-    sb.append("    productSpecCharacteristicValue: ").append(toIndentedString(productSpecCharacteristicValue)).append("\n");
+    sb.append("    productSpecCharRel: ").append(toIndentedString(productSpecCharRel)).append("\n");
+    sb.append("    productSpecCharValue: ").append(toIndentedString(productSpecCharValue)).append("\n");
     sb.append("    validFor: ").append(toIndentedString(validFor)).append("\n");
     sb.append("    baseType: ").append(toIndentedString(baseType)).append("\n");
     sb.append("    schemaLocation: ").append(toIndentedString(schemaLocation)).append("\n");

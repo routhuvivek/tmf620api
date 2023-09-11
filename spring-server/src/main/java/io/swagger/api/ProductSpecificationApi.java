@@ -61,7 +61,7 @@ public interface ProductSpecificationApi {
         produces = { "application/json;charset=utf-8" }, 
         consumes = { "application/json;charset=utf-8" },
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteProductSpecification(@ApiParam(value = "Identifier of the ProductSpecification",required=true) @PathVariable("id") String id);
+    ResponseEntity<String> deleteProductSpecification(@ApiParam(value = "Identifier of the ProductSpecification",required=true) @PathVariable("id") String id);
 
 
     @ApiOperation(value = "List or find ProductSpecification objects", nickname = "listProductSpecification", notes = "This operation list or find ProductSpecification entities", response = ProductSpecification.class, responseContainer = "List", tags={ "productSpecification", })

@@ -91,13 +91,17 @@ public class ProductOfferingApiController implements ProductOfferingApi {
         if (accept != null && accept.contains("application/json")) {
             try {
                 ProductOffering productofferingDb= productOfferingDao.findOne(id);
+                if(Objects.nonNull(productOffering.getName())&& !"".equalsIgnoreCase(productOffering.getName())){
+                    productofferingDb.setName(productOffering.getName());
+                }
                 if(Objects.nonNull(productOffering.getVersion())&& !"".equalsIgnoreCase(productOffering.getVersion())){
                     productofferingDb.setVersion(productOffering.getVersion());
                 }
-                if(Objects.nonNull(productOffering.getValidFor())&& !"".equalsIgnoreCase(productOffering.getValidFor().toString())){
-                    productofferingDb.setValidFor(productOffering.getValidFor());
+                if(Objects.nonNull(productOffering.getDescription())&& !"".equalsIgnoreCase(productOffering.getDescription().toString())){
+                    productofferingDb.setDescription(productOffering.getDescription());
                 }
                 ProductOffering productOfferingResponse = productOfferingDao.findOne(id);
+                productOfferingDao.save(productOfferingResponse);
                 return new ResponseEntity<ProductOffering>(productOfferingResponse, HttpStatus.ACCEPTED);
             } catch (Exception e) {
                 log.error("Couldn't serialize response for content type application/json", e);

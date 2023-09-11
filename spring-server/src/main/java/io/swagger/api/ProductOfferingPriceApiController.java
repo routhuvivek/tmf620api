@@ -90,13 +90,20 @@ public class ProductOfferingPriceApiController implements ProductOfferingPriceAp
         if (accept != null && accept.contains("application/json")) {
             try {
                 ProductOfferingPrice productOfferingPriceDb= productOfferingPriceDao.findOne(id);
+                if(Objects.nonNull(productOfferingPrice.getName())&& !"".equalsIgnoreCase(productOfferingPrice.getName())){
+                    productOfferingPriceDb.setName(productOfferingPrice.getName());
+                }
+                if(Objects.nonNull(productOfferingPrice.getDescription())&& !"".equalsIgnoreCase(productOfferingPrice.getDescription())){
+                    productOfferingPriceDb.setDescription(productOfferingPrice.getDescription());
+                }
                 if(Objects.nonNull(productOfferingPrice.getVersion())&& !"".equalsIgnoreCase(productOfferingPrice.getVersion())){
                     productOfferingPriceDb.setVersion(productOfferingPrice.getVersion());
                 }
-                if(Objects.nonNull(productOfferingPrice.getValidFor())&& !"".equalsIgnoreCase(productOfferingPrice.getValidFor().toString())){
-                    productOfferingPriceDb.setValidFor(productOfferingPrice.getValidFor());
-                }
+//                if(Objects.nonNull(productOfferingPrice.getValidFor())&& !"".equalsIgnoreCase(productOfferingPrice.getValidFor().toString())){
+//                    productOfferingPriceDb.setValidFor(productOfferingPrice.getValidFor());
+//                }
                 ProductOfferingPrice productOfferingPriceResponse = productOfferingPriceDao.findOne(id);
+                productOfferingPriceDao.save(productOfferingPriceResponse);
                 return new ResponseEntity<ProductOfferingPrice>(productOfferingPriceResponse, HttpStatus.ACCEPTED);
             } catch (Exception e) {
                 log.error("Couldn't serialize response for content type application/json", e);
