@@ -53,7 +53,9 @@ public class ProductSpecificationApiController implements ProductSpecificationAp
         if (accept != null && accept.contains("application/json")) {
             try {
                 ProductSpecification productSpecificationRequest = modelMapper.map(productSpecification,ProductSpecification.class);
+                //System.out.println(productSpecificationRequest);
                 productSpecificationDao.save(productSpecificationRequest);
+
                 return new ResponseEntity<ProductSpecification>(productSpecificationRequest, HttpStatus.ACCEPTED);
             } catch (Exception e) {
                 log.error("Couldn't serialize response for content type application/json", e);

@@ -195,7 +195,7 @@ public class RelatedParty   {
    * @return referredType
   **/
   @ApiModelProperty(required = true, value = "The actual type of the target instance when needed for disambiguation.")
-  //@NotNull
+  @NotNull
   public String getReferredType() {
     return referredType;
   }
