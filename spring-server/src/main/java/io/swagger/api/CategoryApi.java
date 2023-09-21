@@ -61,7 +61,7 @@ public interface CategoryApi {
         produces = { "application/json;charset=utf-8" }, 
         consumes = { "application/json;charset=utf-8" },
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteCategory(@ApiParam(value = "Identifier of the Category",required=true) @PathVariable("id") String id);
+    ResponseEntity<String> deleteCategory(@ApiParam(value = "Identifier of the Category",required=true) @PathVariable("id") String id);
 
 
     @ApiOperation(value = "List or find Category objects", nickname = "listCategory", notes = "This operation list or find Category entities", response = Category.class, responseContainer = "List", tags={ "category", })

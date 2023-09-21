@@ -10,8 +10,15 @@ import io.swagger.model.RelatedParty;
 import io.swagger.model.TimePeriod;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.Builder;
+import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 import org.threeten.bp.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -22,10 +29,14 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2023-08-21T06:57:56.020Z")
 
-
+@Entity
+@Data
+@Builder
 public class Catalog   {
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @JsonProperty("id")
-  private String id = null;
+  private Long id = null;
 
   @JsonProperty("href")
   private String href = null;
@@ -50,13 +61,16 @@ public class Catalog   {
 
   @JsonProperty("category")
   @Valid
+  @OneToMany(targetEntity = CategoryRef.class, cascade = CascadeType.ALL)
   private List<CategoryRef> category = null;
 
   @JsonProperty("relatedParty")
   @Valid
+  @OneToMany(targetEntity = RelatedParty.class, cascade = CascadeType.ALL)
   private List<RelatedParty> relatedParty = null;
 
   @JsonProperty("validFor")
+  @OneToOne(targetEntity = TimePeriod.class, cascade = CascadeType.ALL)
   private TimePeriod validFor = null;
 
   @JsonProperty("@baseType")
@@ -68,7 +82,7 @@ public class Catalog   {
   @JsonProperty("@type")
   private String type = null;
 
-  public Catalog id(String id) {
+  public Catalog id(Long id) {
     this.id = id;
     return this;
   }
@@ -80,11 +94,11 @@ public class Catalog   {
   @ApiModelProperty(value = "Unique identifier of the Catalog")
 
 
-  public String getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

@@ -61,7 +61,7 @@ public interface CatalogApi {
         produces = { "application/json;charset=utf-8" }, 
         consumes = { "application/json;charset=utf-8" },
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteCatalog(@ApiParam(value = "Identifier of the Catalog",required=true) @PathVariable("id") String id);
+    ResponseEntity<String> deleteCatalog(@ApiParam(value = "Identifier of the Catalog",required=true) @PathVariable("id") String id);
 
 
     @ApiOperation(value = "List or find Catalog objects", nickname = "listCatalog", notes = "This operation list or find Catalog entities", response = Catalog.class, responseContainer = "List", tags={ "catalog", })
