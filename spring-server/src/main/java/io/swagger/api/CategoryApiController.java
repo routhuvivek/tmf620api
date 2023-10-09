@@ -1,12 +1,10 @@
 package io.swagger.api;
 
 import io.swagger.dao.CateogryDao;
-import io.swagger.model.Category;
-import io.swagger.model.CategoryCreate;
-import io.swagger.model.CategoryUpdate;
-import io.swagger.model.Error;
+import io.swagger.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.model.Error;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +52,11 @@ public class CategoryApiController implements CategoryApi {
             try {
                 Category categoryResponse = modelMapper.map(category, Category.class);
                 categoryDao.save(categoryResponse);
+                String id = categoryResponse.getId();
+                String href = "http://localhost:8080/tmf-api/productCatalogManagement/v4/category/"+id;
+                categoryResponse.setHref(href);
+                Category category1 = categoryDao.findOne(id);
+                categoryDao.save(category1);
                 return new ResponseEntity<Category>(categoryResponse, HttpStatus.ACCEPTED);
             } catch (Exception e) {
                 log.error("Couldn't serialize response for content type application/json", e);

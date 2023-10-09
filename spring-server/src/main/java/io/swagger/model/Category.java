@@ -34,9 +34,10 @@ import javax.validation.constraints.*;
 @Builder
 public class Category   {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
   @JsonProperty("id")
-  private Long id = null;
+  private String id = null;
 
   @JsonProperty("href")
   private String href = null;
@@ -85,7 +86,7 @@ public class Category   {
   @JsonProperty("@type")
   private String type = null;
 
-  public Category id(Long id) {
+  public Category id(String id) {
     this.id = id;
     return this;
   }
@@ -97,11 +98,11 @@ public class Category   {
   @ApiModelProperty(value = "Unique identifier of the category")
 
 
-  public Long getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(String id) {
     this.id = id;
   }
 

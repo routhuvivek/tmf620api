@@ -54,6 +54,11 @@ public class CatalogApiController implements CatalogApi {
             try {
                 Catalog catalogResponse = modelMapper.map(catalog, Catalog.class);
                 catalogDao.save(catalogResponse);
+                String id = catalogResponse.getId();
+                String href = "http://localhost:8080/tmf-api/productCatalogManagement/v4/catalog/"+id;
+                catalogResponse.setHref(href);
+                Catalog catalog1 = catalogDao.findOne(id);
+                catalogDao.save(catalog1);
                 return new ResponseEntity<Catalog>(catalogResponse, HttpStatus.ACCEPTED);
             } catch (Exception e) {
                 log.error("Couldn't serialize response for content type application/json", e);

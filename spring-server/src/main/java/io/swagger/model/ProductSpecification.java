@@ -107,7 +107,7 @@ public class ProductSpecification   {
   private List<ServiceSpecificationRef> serviceSpecification = null;
 
   @JsonProperty("targetProductSchema")
-  @OneToOne(targetEntity = TargetProductSchema.class, cascade = CascadeType.ALL)
+  @OneToOne(targetEntity = TargetProductSchema.class, cascade = CascadeType.MERGE)
   private TargetProductSchema targetProductSchema = null;
 
   @JsonProperty("validFor")
